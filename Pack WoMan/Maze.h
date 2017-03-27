@@ -12,6 +12,9 @@ public:
 	inline std::size_t positionToIndex(sf::Vector2i position) const;
 	inline sf::Vector2i indexToPosition(std::size_t index) const;
 
+	sf::Vector2i mapPixelToCell(sf::Vector2f pixel) const;
+	sf::Vector2f mapCellToPixel(sf::Vector2i cell) const;
+
 private:
 
 	enum CellData

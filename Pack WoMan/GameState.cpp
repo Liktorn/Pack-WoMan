@@ -45,12 +45,32 @@ GetReadyState::GetReadyState(Game *game)
 }
 PlayingState::PlayingState(Game *game)
 	: GameState(game)
-	, m_pacWoman(game->getTexture())
-	, m_ghost(game->getTexture())
+//	, m_pacWoman(game->getTexture())
+//	, m_ghost(game->getTexture())
+	, m_pacWoman(nullptr)
 {
-	m_pacWoman.move(100, 100);
-	m_ghost.move(200, 200);
+//	m_pacWoman.move(100, 100);
+//	m_ghost.move(200, 200);
 	m_maze.loadLevel("level");
+	m_pacWoman = new PacWoman(game->getTexture());
+	m_pacWoman->setMaze(&m_maze);
+	m_pacWoman->setPosition(m_maze.mapCellToPixel(m_maze.getPacWomanPosition()));
+
+	for (auto ghostPosition : m_maze.getGhostPositions())
+	{
+		Ghost *ghost = new Ghost(game->getTexture());
+		ghost->setMaze(&m_maze);
+		ghost->setPosition(m_maze.mapCellToPixel(ghostPosition));
+
+		m_ghosts.push_back(ghost);
+	}
+}
+PlayingState::~PlayingState()
+{
+	delete m_pacWoman;
+
+	for (Ghost* ghost : m_ghosts)
+		delete ghost;
 }
 LostState::LostState(Game *game)
 	: GameState(game)
@@ -155,8 +175,10 @@ void PlayingState::moveStick(sf::Vector2i direction)
 }
 void PlayingState::update(sf::Time delta)
 {
-	m_pacWoman.update(delta);
-	m_ghost.update(delta);
+	m_pacWoman->update(delta);
+
+	for (Ghost* ghost : m_ghosts)
+		ghost->update(delta);
 }
 void PlayingState::draw(sf::RenderWindow &window)
 {

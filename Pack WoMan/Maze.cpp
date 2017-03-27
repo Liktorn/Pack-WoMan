@@ -118,3 +118,17 @@ sf::Vector2i Maze::indexToPosition(std::size_t index) const
 
 	return position;
 }
+sf::Vector2i Maze::mapPixelToCell(sf::Vector2f pixel) const
+{
+	sf::Vector2i cell;
+	cell.x = std::floor(pixel.x / 32.f);
+	cell.y = std::floor(pixel.y / 32.f);
+	return cell;
+}
+sf::Vector2f Maze::mapCellToPixel(sf::Vector2i cell) const
+{
+	sf::Vector2f pixel;
+	pixel.x = cell.x * 32 + 16;
+	pixel.y = cell.y * 32 + 16;
+	return pixel;
+}

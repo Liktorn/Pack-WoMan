@@ -68,6 +68,7 @@ class PlayingState : public GameState
 {
 public:
 	PlayingState(Game *game);
+	~PlayingState();
 	void insertCoin();
 	void pressButton();
 	void moveStick(sf::Vector2i direction);
@@ -76,7 +77,8 @@ public:
 
 private:
 	PacWoman m_pacWoman;
-	Ghost m_ghost;
+	std::vector<Ghost*> m_ghosts;
+	//Ghost m_ghost;
 	Maze m_maze;
 };
 

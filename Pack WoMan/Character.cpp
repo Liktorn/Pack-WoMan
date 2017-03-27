@@ -16,7 +16,7 @@ void Character::setSpeed(float speed)
 {
 	m_speed = speed;
 }
-float Character::getSpeed()
+float Character::getSpeed() const
 {
 	return m_speed;
 }

@@ -2,7 +2,7 @@
 #include <SFML\Graphics.hpp>
 
 
-class Bonus : public sf::Drawable, public sf::Transform 
+class Bonus : public sf::Drawable, public sf::Transformable
 {
 private:
 	sf::Sprite m_visual;

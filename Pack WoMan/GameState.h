@@ -1,5 +1,8 @@
 #pragma once
 #include<SFML\Graphics.hpp>
+#include "PacWoman.h"
+#include "Ghost.h"
+#include "Maze.h"
 
 class Game;
 
@@ -70,6 +73,11 @@ public:
 	void moveStick(sf::Vector2i direction);
 	void update(sf::Time delta);
 	void draw(sf::RenderWindow &window);
+
+private:
+	PacWoman m_pacWoman;
+	Ghost m_ghost;
+	Maze m_maze;
 };
 
 class LostState : public GameState

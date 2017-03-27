@@ -2,11 +2,11 @@
 
 
 
-Ghost::Ghost(sf::Texture &texture, PacWoman *pacWoman)
+Ghost::Ghost(sf::Texture &texture)
 	: m_visual(texture)
 	, m_isWeak(false)
 	, m_weaknessDuration(sf::Time::Zero)
-	, m_pacWoman(pacWoman)
+	//, m_pacWoman(pacWoman)
 {
 	setOrigin(20, 20);
 
@@ -44,6 +44,17 @@ void Ghost::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 void Ghost::update(sf::Time delta)
 {
+	if (m_isWeak)
+	{
+		m_weaknessDuration -= delta;
+		if (m_weaknessDuration <= sf::Time::Zero)
+		{
+			m_isWeak = false;
+			m_strongAnimator.play(sf::seconds(0.25), true);
+		}
+
+	}
+
 	if (!m_isWeak)
 	{
 		m_strongAnimator.update(delta);

@@ -5,7 +5,10 @@
 class Maze : public sf::Drawable
 {
 public:
+
+	Maze(sf::Texture& texture);
 	void loadLevel(std::string name);
+
 	sf::Vector2i getPacWomanPosition() const;
 	std::vector<sf::Vector2i> getGhostPositions() const;
 
@@ -14,6 +17,10 @@ public:
 
 	sf::Vector2i mapPixelToCell(sf::Vector2f pixel) const;
 	sf::Vector2f mapCellToPixel(sf::Vector2i cell) const;
+
+	bool isWall(sf::Vector2i position) const;
+
+	sf::Vector2i getSize() const;
 
 private:
 
@@ -25,7 +32,8 @@ private:
 		SuperDot,
 		Bonus
 	};
-	void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 	sf::Vector2i m_mazeSize;
 	std::vector<CellData> m_mazeData;
@@ -33,9 +41,6 @@ private:
 	std::vector<sf::Vector2i> m_ghostPositions;
 
 	sf::RenderTexture m_renderTexture;
-
-public:
-	Maze();
-	~Maze();
+	sf::Texture& m_texture;
 };
 

@@ -76,7 +76,7 @@ public:
 	void draw(sf::RenderWindow &window);
 
 private:
-	PacWoman m_pacWoman;
+	PacWoman* m_pacWoman;
 	std::vector<Ghost*> m_ghosts;
 	//Ghost m_ghost;
 	Maze m_maze;

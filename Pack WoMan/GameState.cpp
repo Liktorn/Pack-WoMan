@@ -1,7 +1,8 @@
 #include "GameState.h"
 #include "Game.h"
+#include <iostream>
 
-template <class T>
+template <typename T>
 void centerOrigin(T &drawable)
 {
 	sf::FloatRect bound = drawable.getLocalBounds();
@@ -47,6 +48,7 @@ PlayingState::PlayingState(Game *game)
 	: GameState(game)
 //	, m_pacWoman(game->getTexture())
 //	, m_ghost(game->getTexture())
+	, m_maze(game->getTexture())
 	, m_pacWoman(nullptr)
 {
 //	m_pacWoman.move(100, 100);
@@ -160,18 +162,16 @@ void GetReadyState::draw(sf::RenderWindow &window)
 /////////////////////////////////////////////////////
 void PlayingState::insertCoin()
 {
-	m_pacWoman.die();
+//	m_pacWoman.die();
 }
 void PlayingState::pressButton()
 {
-	m_ghost.setWeak(sf::seconds(3));
+	//getGame()->changeGameState(GameState::Playing);
 }
 void PlayingState::moveStick(sf::Vector2i direction)
 {
-	if (direction.x == -1)
-		getGame()->changeGameState(GameState::Won);
-	else if (direction.x == 1)
-		getGame()->changeGameState(GameState::Lost);
+	m_pacWoman->setDirection(direction);
+	std::cout << "moving" << std::endl;
 }
 void PlayingState::update(sf::Time delta)
 {
@@ -182,9 +182,12 @@ void PlayingState::update(sf::Time delta)
 }
 void PlayingState::draw(sf::RenderWindow &window)
 {
-	window.draw(m_pacWoman);
-	window.draw(m_ghost);
 	window.draw(m_maze);
+	window.draw(*m_pacWoman);
+	
+	for (Ghost* ghost : m_ghosts)
+		window.draw(*ghost);
+	
 }
 /////////////////////////////////////////////////////
 void LostState::insertCoin()

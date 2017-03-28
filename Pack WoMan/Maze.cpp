@@ -2,15 +2,16 @@
 #include "Dot.h"
 
 
-Maze::Maze()
+Maze::Maze(sf::Texture &texture)
 	: m_mazeSize(0, 0)
+	, m_texture(texture)
 {
 }
 
 
-Maze::~Maze()
-{
-}
+//Maze::~Maze()
+//{
+//}
 
 void Maze::loadLevel(std::string name)
 {
@@ -131,4 +132,11 @@ sf::Vector2f Maze::mapCellToPixel(sf::Vector2i cell) const
 	pixel.x = cell.x * 32 + 16;
 	pixel.y = cell.y * 32 + 16;
 	return pixel;
+}
+
+bool Maze::isWall(sf::Vector2i position) const
+{
+	if (position.x < 0 || position.y < 0 || position.x >= m_mazeSize.x || position.y >= m_mazeSize.y)
+		return false;
+	return m_mazeData[positionToIndex(position)] == Wall;
 }
